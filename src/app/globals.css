@@ -1,0 +1,167 @@
+/* @import "tailwindcss";
+
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  background: white;
+  color: black;
+  font-family: var(--font-general-sans), sans-serif;
+}
+
+.testimonial-card {
+  box-shadow: 0px 4px 184px 0px rgba(12, 47, 82, 0.08);
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Light.otf');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Regular.otf');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Medium.otf');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-SemiBold.otf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Bold.otf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+} */
+
+
+
+
+
+
+@import "tailwindcss";
+@tailwind utilities;
+
+/* 🎨 Custom Theme Variables */
+:root {
+  --color-primary: #762AFF;
+  --color-primary-dark: #020A55;
+  --color-dark-indigo: #714EFF;
+  --color-dark-blue-lotus: #0D51FF;
+  --color-helio-purple: #E64EFF;
+
+  --font-sans: "GeneralSans", sans-serif;
+
+  --font-size-sbase: 0.95rem;
+
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* 🌍 Global body styles */
+body {
+  background: white;
+  color: black;
+  font-family: var(--font-sans);
+}
+
+/* ✨ Utility examples (replicating Tailwind extensions) */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+.text-primary {
+  color: var(--color-primary);
+}
+.bg-primary-dark {
+  background-color: var(--color-primary-dark);
+}
+.text-primary-dark {
+  color: var(--color-primary-dark);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+.text-sbase {
+  font-size: var(--font-size-sbase);
+}
+
+.testimonial-card {
+  box-shadow: 0px 4px 184px 0px rgba(12, 47, 82, 0.08);
+}
+
+/* 🎭 Fonts */
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Light.otf');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Regular.otf');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Medium.otf');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-SemiBold.otf');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('/fonts/GeneralSans-Bold.otf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
