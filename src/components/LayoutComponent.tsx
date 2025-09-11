@@ -17,7 +17,7 @@ interface LayoutProps {
 const MENUS = [
   { title: "Product", path: "/product" },
   { title: "Industries", path: "/industries" },
-  { title: "Service", path: "/service" },
+  { title: "Service", path: "/services" },
   { title: "Portfolio", path: "/portfolio" },
   { title: "Contact us", path: "/contact-us" },
   { title: "Other", path: "/other" },

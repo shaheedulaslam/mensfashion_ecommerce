@@ -4,59 +4,24 @@ import testmonial3 from "../../public/images/testmonial3.png";
 
 export const TestimonialData = [
   {
-    name: "David Ben",
+    name: "Ashvin Naik",
     description:
       "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
     bio: "CEO, Mandovi Corp, Redmond, WA, USA",
     image: testmonial1,
   },
   {
-    name: "Ashvin Naik",
+    name: "Mithun Chandra",
     description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
+      "The team at Itmakerz is one that you wish you had in your own company. Transparency, On time delivery and Top Notch Cutomer Service is what I would sum up the whole experience. I wish them all the very best and hope they keep up the good work for the years to come. Highly recommended.",
+    bio: "CEO, Co-Founder - Cappuccino Labs",
     image: testmonial2,
   },
   {
-    name: "Sameer Ali",
+    name: "Vaibhav Nagori",
     description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
+      "Itmarkerz are one of the most efficient technology partner we have worked with. Their communication is crisp and their delivery is time committal",
+    bio: "CEO, Ultium Consultancy",
     image: testmonial3,
-  },
-  {
-    name: "John Wick",
-    description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
-    image: testmonial2,
-  },
-  {
-    name: "David Ben",
-    description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
-    image: testmonial1,
-  },
-  {
-    name: "Ashvin Naik",
-    description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
-    image: testmonial2,
-  },
-  {
-    name: "Sameer Ali",
-    description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
-    image: testmonial3,
-  },
-  {
-    name: "John Wick",
-    description:
-      "Itmarkerz is one of the fastest software vendors we have worked with. Speed with Scale!",
-    bio: "CEO, Mandovi Corp, Redmond, WA, USA",
-    image: testmonial2,
   },
 ];
