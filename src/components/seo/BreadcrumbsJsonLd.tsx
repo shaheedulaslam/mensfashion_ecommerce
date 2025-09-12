@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import Script from "next/script";
 type Crumb = { name: string; item: string };
 export function BreadcrumbsJsonLd({ items }: { items: Crumb[] }) {
@@ -15,6 +16,7 @@ export function BreadcrumbsJsonLd({ items }: { items: Crumb[] }) {
     <Script
       id={`breadcrumbs-${items.at(-1)?.item}`}
       type="application/ld+json"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );

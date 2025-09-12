@@ -1,69 +1,84 @@
 import React, { useState } from "react";
 import { ShowMoreArrow } from "./SvgComponents";
-
+import Link from "next/link";
 
 export default function ServiceBenefitCard() {
   const [showAll, setShowAll] = useState(false);
-  
+
   // Service items data
   const serviceItems = [
     {
-      title: "Product Strategy & Discovery — /services/strategy",
+      title: "Product Strategy & Discovery",
       description: "Workshops, scoping, roadmaps, and prototypes.",
       color: "#24ABF5",
-      aosDelay: "0"
+      aosDelay: "0",
+      path: "/services/strategy",
     },
     {
-      title: "UI/UX Design — /services/ui-ux-design",
+      title: "UI/UX Design",
       description: "Research, flows, wireframes, and design systems.",
       color: "#33DB9F",
-      aosDelay: "50"
-    },
-    {
-      title: "Web App Development — /services/web-development",
-      description: "Laravel/PHP, React, Next.js, Node.js — SaaS, portals, dashboards.",
-      color: "#24ABF5",
-      aosDelay: "100"
-    },
-    {
-      title: "Mobile App Development — /services/mobile-app-development",
-      description: "React Native/Expo (iOS & Android) + native iOS when needed.",
-      color: "#33DB9F",
-      aosDelay: "150"
-    },
-    {
-      title: "AI & Data Solutions — /services/ai",
-      description: "LLM copilots, RAG search, chatbots, analytics, MLOps.",
-      color: "#24ABF5",
-      aosDelay: "200"
-    },
-    {
-      title: "E-commerce Development — /services/ecommerce",
-      description: "Magento, WooCommerce, OpenCart — catalogs, checkout, payments.",
-      color: "#33DB9F",
-      aosDelay: "220"
-    },
-    {
-      title: "CMS Development — /services/cms",
-      description: "WordPress, Drupal, Joomla, Umbraco, Typo3; headless & migrations.",
-      color: "#24ABF5",
-      aosDelay: "0",
-      isAdditional: true
-    },
-    {
-      title: "Cloud & DevOps — /services/cloud-devops",
-      description: "AWS/Azure/GCP, Docker/K8s, CI/CD, monitoring, cost control.",
-      color: "#33DB9F",
       aosDelay: "50",
-      isAdditional: true
+      path: "/services/ui-ux-design",
     },
     {
-      title: "Team Augmentation (PHP Outsourcing) — /services/team-augmentation",
-      description: "On-demand Laravel/PHP, React/Next.js, RN engineers (India).",
+      title: "Web App Development",
+      description:
+        "Laravel/PHP, React, Next.js, Node.js — SaaS, portals, dashboards.",
       color: "#24ABF5",
       aosDelay: "100",
-      isAdditional: true
-    }
+      path: "/services/web-development",
+    },
+    {
+      title: "Mobile App Development",
+      description:
+        "React Native/Expo (iOS & Android) + native iOS when needed.",
+      color: "#33DB9F",
+      aosDelay: "150",
+      path: " /services/mobile-app-development",
+    },
+    {
+      title: "AI & Data Solutions",
+      description: "LLM copilots, RAG search, chatbots, analytics, MLOps.",
+      color: "#24ABF5",
+      aosDelay: "200",
+      path: "/services/ai",
+    },
+    {
+      title: "E-commerce Development",
+      description:
+        "Magento, WooCommerce, OpenCart — catalogs, checkout, payments.",
+      color: "#33DB9F",
+      aosDelay: "220",
+      path: "/services/ecommerce",
+    },
+    {
+      title: "CMS Development",
+      description:
+        "WordPress, Drupal, Joomla, Umbraco, Typo3; headless & migrations.",
+      color: "#24ABF5",
+      aosDelay: "0",
+      isAdditional: true,
+      path: "/services/cms",
+    },
+    {
+      title: "Cloud & DevOps",
+      description:
+        "AWS/Azure/GCP, Docker/K8s, CI/CD, monitoring, cost control.",
+      color: "#33DB9F",
+      aosDelay: "50",
+      isAdditional: true,
+      path: "/services/cloud-devops",
+    },
+    {
+      title: "Team Augmentation (PHP Outsourcing)",
+      description:
+        "On-demand Laravel/PHP, React/Next.js, RN engineers (India).",
+      color: "#24ABF5",
+      aosDelay: "100",
+      isAdditional: true,
+      path: "/services/team-augmentation",
+    },
   ];
 
   // Determine which items to display
@@ -77,7 +92,7 @@ export default function ServiceBenefitCard() {
           // Calculate row and position for border logic
           const isLastRow = index >= Math.floor(totalItems / 3) * 3;
           const isLastInRow = (index + 1) % 3 === 0;
-          
+
           return (
             <div
               key={index}
@@ -85,18 +100,15 @@ export default function ServiceBenefitCard() {
               data-aos-delay={item.aosDelay}
               className={`
                 border-[#C7B9FF] border-dashed hover:bg-[#C7B9FF10] duration-500 bg-white px-8
-                ${index < 3 ? 'pt-0' : 'pt-10'}
-                ${index % 3 !== 2 ? 'md:border-r' : ''}
-                ${!isLastRow ? 'border-b pb-10' : 'pb-10'}
-                ${isLastInRow ? 'pr-0' : 'pr-10'}
+                ${index < 3 ? "pt-0" : "pt-10"}
+                ${index % 3 !== 2 ? "md:border-r" : ""}
+                ${!isLastRow ? "border-b pb-10" : "pb-10"}
+                ${isLastInRow ? "pr-0" : "pr-10"}
               `}
             >
-              <h1 
-                className="text-2xl font-bold"
-                style={{ color: item.color }}
-              >
+              <Link href={item.path} className="text-2xl font-bold" style={{ color: item.color }}>
                 {item.title}
-              </h1>
+              </Link>
               <p className="text-[#333759] opacity-80 font-normal leading-loose text-sbase py-4">
                 {item.description}
               </p>

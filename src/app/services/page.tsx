@@ -6,7 +6,7 @@ import ServiceBenefitCard from "@/components/ServiceBenefitCard";
 import { ServiceItMarkerzLogo } from "@/components/SvgComponents";
 import React from "react";
 
-export default function Service() {
+export default function ServicePage() {
   return (
     <>
       <section className="">

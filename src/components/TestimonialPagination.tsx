@@ -42,7 +42,7 @@ const TestimonialSection = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <button className="md:block hidden" onClick={() => swiper?.slideNext()}>
+      <button className="md:block hidden ml-3" onClick={() => swiper?.slideNext()}>
         <PaginationRightIcon />
       </button>
       <div className="flex md:hidden mt-6 flex-row items-center space-x-8">

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import Script from "next/script";
 type QA = { question: string; answer: string };
 export function FaqJsonLd({ faqs }: { faqs: QA[] }) {
@@ -14,6 +15,7 @@ export function FaqJsonLd({ faqs }: { faqs: QA[] }) {
     <Script
       id="faq-jsonld"
       type="application/ld+json"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );

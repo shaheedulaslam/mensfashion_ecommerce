@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import Script from "next/script";
 
 export function WebSiteJsonLd() {
@@ -16,6 +17,7 @@ export function WebSiteJsonLd() {
     <Script
       id="website-jsonld"
       type="application/ld+json"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );

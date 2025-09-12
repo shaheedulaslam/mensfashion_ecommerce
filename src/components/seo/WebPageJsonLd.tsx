@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Script from "next/script";
 type Props = {
@@ -27,6 +28,7 @@ export function WebPageJsonLd({
     <Script
       id={`webpage-jsonld-${url}`}
       type="application/ld+json"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );

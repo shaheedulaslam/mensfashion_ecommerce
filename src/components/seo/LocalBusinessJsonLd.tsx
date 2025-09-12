@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import Script from "next/script";
 export function LocalBusinessJsonLd() {
   const data = {
@@ -43,6 +44,7 @@ export function LocalBusinessJsonLd() {
     <Script
       id="localbusiness-jsonld"
       type="application/ld+json"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
