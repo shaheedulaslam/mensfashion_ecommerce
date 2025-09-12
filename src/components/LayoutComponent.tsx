@@ -19,7 +19,7 @@ const MENUS = [
   { title: "Industries", path: "/industries" },
   { title: "Service", path: "/services" },
   { title: "Portfolio", path: "/portfolio" },
-  { title: "Contact us", path: "/contact-us" },
+  { title: "Contact us", path: "/contact" },
   { title: "Other", path: "/other" },
 ];
 
