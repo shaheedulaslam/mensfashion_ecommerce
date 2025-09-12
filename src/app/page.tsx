@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { CardGrid } from "@/components/ServiceCard";
 import { SocialMedia } from "@/components/SocialMedia";
-import { HeroMask, HeroArrow, ProductCard2 } from "@/components/SvgComponents";
+import { HeroMask, HeroArrow, ProductCard2, HeroSectionMan } from "@/components/SvgComponents";
 import { cardData } from "@/data/ServiceCardData";
 import prod1 from "../../public/images/prod1.svg";
 import prod2 from "../../public/images/prod2.svg";
@@ -82,7 +82,7 @@ export default function Home() {
       <BreadcrumbsJsonLd items={[{ name: "Home", item: url }]} />
 
       <div className=" -translate-y-20">
-        <section className="bg-[#F2F5F8] py-20 pb-10 lg:pb-0 overflow-hidden">
+        <section className="bg-[#F2F5F8] py-20 pb-10 lg:pb-0 relative overflow-hidden">
           <Container>
             <div className="relative">
               <div className="absolute -top-10 object-contain w-full h-auto lg:ml-[-10%] opacity-50">
@@ -118,72 +118,10 @@ export default function Home() {
                     <SocialMedia />
                   </div>
                 </div>
-                <div className="lg:col-span-6 col-span-12 relative order-1 lg:order-2">
-                  <div className="relative">
-                    <img
-                      data-aos="zoom-out"
-                      src="/images/homeSectionOne.png"
-                      alt="Itmarkers home section one"
-                      className="h-full w-full object-cover floating-animation"
-                    />
-                    {/* Optional floating elements for enhanced effect */}
-                    <div className="absolute top-10 -right-5 w-6 h-6 rounded-full bg-[#762AFF] opacity-20 floating-animation-delayed"></div>
-                    <div className="absolute bottom-16 -left-4 w-5 h-5 rounded-full bg-[#33DB9F] opacity-20 floating-animation-delayed-2"></div>
-                  </div>
-                </div>
+                <HeroSectionMan/>
               </div>
             </div>
           </Container>
-
-          {/* Add CSS for the animation */}
-          <style jsx>{`
-            @keyframes float {
-              0% {
-                transform: translateY(0px);
-              }
-              50% {
-                transform: translateY(-15px);
-              }
-              100% {
-                transform: translateY(0px);
-              }
-            }
-
-            .floating-animation {
-              animation: float 6s ease-in-out infinite;
-            }
-
-            .floating-animation-delayed {
-              animation: float 7s ease-in-out infinite;
-              animation-delay: 1s;
-            }
-
-            .floating-animation-delayed-2 {
-              animation: float 8s ease-in-out infinite;
-              animation-delay: 2s;
-            }
-
-            /* For a more premium effect with multiple animations */
-            @keyframes float-slow {
-              0% {
-                transform: translateY(0px) rotate(0deg);
-              }
-              33% {
-                transform: translateY(-10px) rotate(2deg);
-              }
-              66% {
-                transform: translateY(-5px) rotate(-1deg);
-              }
-              100% {
-                transform: translateY(0px) rotate(0deg);
-              }
-            }
-
-            /* Alternative animation style */
-            .floating-animation {
-              animation: float-slow 8s ease-in-out infinite;
-            }
-          `}</style>
         </section>
 
         <section>
@@ -513,6 +451,88 @@ export default function Home() {
           </Container>
         </section>
       </div>
+
+      <style jsx global>{`
+        @keyframes float-slow {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+
+        @keyframes float-medium {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-12px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+
+        @keyframes float-fast {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-15px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+
+        @keyframes rotate-slow {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes pulse {
+          0% {
+            opacity: 0.7;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0.7;
+          }
+        }
+
+        .animate-float-slow {
+          animation: float-slow 8s ease-in-out infinite;
+        }
+
+        .animate-float-medium {
+          animation: float-medium 6s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+
+        .animate-float-fast {
+          animation: float-fast 4s ease-in-out infinite;
+          animation-delay: 0.5s;
+        }
+
+        .animate-rotate-slow {
+          animation: rotate-slow 20s linear infinite;
+          transform-origin: center;
+        }
+
+        .animate-pulse {
+          animation: pulse 3s ease-in-out infinite;
+        }
+      `}</style>
     </>
   );
 }
