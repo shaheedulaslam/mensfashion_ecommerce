@@ -1428,7 +1428,6 @@ export function ServiceItMarkerzLogo() {
 export function HeroSectionMan() {
   return (
     <>
-      <div className="lg:col-span-6 col-span-12 relative order-1 lg:order-2">
         {/* Static man image */}
         <div
           className="absolute inset-0 z-10 flex items-center justify-center"
@@ -1552,7 +1551,7 @@ export function HeroSectionMan() {
               />
             </g>
 
-            <g className="animate-pulse">
+            <g className="animate-float-fast">
               <path
                 d="M259.116 747.673C259.491 746.962 260.509 746.962 260.884 747.673L267.117 759.466C267.211 759.644 267.356 759.789 267.534 759.883L279.327 766.116C280.038 766.491 280.038 767.509 279.327 767.884L267.534 774.117C267.356 774.211 267.211 774.356 267.117 774.534L260.884 786.327C260.509 787.038 259.491 787.038 259.116 786.327L252.883 774.534C252.789 774.356 252.644 774.211 252.466 774.117L240.673 767.884C239.962 767.509 239.962 766.491 240.673 766.116L252.466 759.883C252.644 759.789 252.789 759.644 252.883 759.466L259.116 747.673Z"
                 fill="#714EFF"
@@ -1743,7 +1742,6 @@ export function HeroSectionMan() {
             </defs>
           </svg>
         </div>
-      </div>
 
       <style jsx global>{`
         @keyframes float-slow {
@@ -1876,7 +1874,6 @@ export function HeroSectionMan() {
 
 export function LandingPageSoftware() {
   return (
-    <div className="lg:col-span-7 col-span-12 lg:order-2 order-1">
       <svg
         data-aos="zoom-out"
         width="966"
@@ -2157,6 +2154,5 @@ export function LandingPageSoftware() {
           </clipPath>
         </defs>
       </svg>
-    </div>
   );
 }

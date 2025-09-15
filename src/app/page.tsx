@@ -124,7 +124,9 @@ export default function Home() {
                     <SocialMedia />
                   </div>
                 </div>
-                <HeroSectionMan />
+                <div className="lg:col-span-6 col-span-12 relative order-1 lg:order-2">
+                  <HeroSectionMan />
+                </div>
               </div>
             </div>
           </Container>
@@ -229,7 +231,9 @@ export default function Home() {
                   business outcomes.
                 </p>
               </div>
-              <LandingPageSoftware />
+              <div className="lg:col-span-7 col-span-12 lg:order-2 order-1">
+                <LandingPageSoftware />
+              </div>
             </div>
           </Container>
         </section>
