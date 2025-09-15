@@ -45,6 +45,9 @@ export const metadata: Metadata = {
   description:
     "itmarkerz Technologies offers Laravel, PHP outsourcing, React, Next.js, React Native, Expo, iOS",
   alternates: { canonical: "/" },
+  icons: {
+    icon: "/images/itmIcon.png", // Add this line for favicon
+  },
   openGraph: {
     title: "itmarkerz Technologies | Web & Mobile App Development",
     description:
