@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import LayoutComponent from "@/components/LayoutComponent";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { Metadata } from "next";
+import { CartProvider } from "@/context/CartContext";
 
 const generalSans = localFont({
   src: [
@@ -39,25 +39,10 @@ const generalSans = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://itmarkerz.co.in"),
-  title:
-    "itmarkerz Technologies | Laravel, PHP & React Development Company India",
-  description:
-    "itmarkerz Technologies offers Laravel, PHP outsourcing, React, Next.js, React Native, Expo, iOS",
-  alternates: { canonical: "/" },
-  icons: {
-    icon: "/images/itmIcon.png", // Add this line for favicon
-  },
-  openGraph: {
-    title: "itmarkerz Technologies | Web & Mobile App Development",
-    description:
-      "Building scalable web & mobile experiences with Laravel, PHP, React, Next.js, React",
-    url: "https://itmarkerz.co.in",
-    type: "website",
-    images: ["/og-image.jpg"],
-  },
-  twitter: { card: "summary_large_image" },
+  title: "90s MensFashion - Mens Retro Styles",
+  description: "Bold graphics, neon accents, and relaxed fits — curated for today's streetwear revival.",
 };
+
 
 export default function RootLayout({
   children,
@@ -67,7 +52,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={generalSans.variable}>
-        <LayoutComponent>{children}</LayoutComponent>
+              <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
