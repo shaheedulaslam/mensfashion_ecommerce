@@ -6,10 +6,6 @@ import {
   Download, 
   Eye, 
   Edit, 
-  Truck,
-  CheckCircle,
-  XCircle,
-  Clock,
   Package
 } from 'lucide-react';
 
@@ -88,16 +84,16 @@ export default function AdminOrders() {
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusIcon = (status: Order['orderStatus']) => {
-    switch (status) {
-      case 'pending': return <Clock className="w-4 h-4 text-yellow-500" />;
-      case 'confirmed': return <CheckCircle className="w-4 h-4 text-blue-500" />;
-      case 'shipped': return <Truck className="w-4 h-4 text-purple-500" />;
-      case 'delivered': return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case 'cancelled': return <XCircle className="w-4 h-4 text-red-500" />;
-      default: return <Clock className="w-4 h-4 text-gray-500" />;
-    }
-  };
+  // const getStatusIcon = (status: Order['orderStatus']) => {
+  //   switch (status) {
+  //     case 'pending': return <Clock className="w-4 h-4 text-yellow-500" />;
+  //     case 'confirmed': return <CheckCircle className="w-4 h-4 text-blue-500" />;
+  //     case 'shipped': return <Truck className="w-4 h-4 text-purple-500" />;
+  //     case 'delivered': return <CheckCircle className="w-4 h-4 text-green-500" />;
+  //     case 'cancelled': return <XCircle className="w-4 h-4 text-red-500" />;
+  //     default: return <Clock className="w-4 h-4 text-gray-500" />;
+  //   }
+  // };
 
   const getStatusColor = (status: Order['orderStatus']) => {
     switch (status) {
