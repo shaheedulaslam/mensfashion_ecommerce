@@ -57,39 +57,54 @@ export default function CartPage() {
       [e.target.name]: e.target.value,
     });
   };
+  
 
-  // PhonePe Payment Integration
-  const handlePay = async () => {
-    try {
-      const result = await initiatePayment(total);
-      if (result) {
-        router.push(result.redirectUrl); // Redirect to status check page
-      }
-    } catch (error) {
-      console.error("Error processing payment:", error);
+const handlePay = async (amount: number, orderData: any) => {
+  try {
+    const result = await initiatePayment(amount, orderData);
+    if (result) {
+      router.push(`/status/${result.transactionId}?orderId=${result.orderId}`);
     }
-  };
+  } catch (error) {
+    console.error("Error processing payment:", error);
+  }
+};
 
   // Main Payment Handler
-  const handlePayment = async () => {
-    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
-      alert("Please fill in all required customer details");
-      return;
-    }
+const handlePayment = async () => {
+  if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
+    alert("Please fill in all required customer details");
+    return;
+  }
 
-    setIsProcessing(true);
+  setIsProcessing(true);
 
-    try {
-      switch (selectedPaymentMethod) {
-        case 'phonepe':
-          await handlePay();
-          break;
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      setIsProcessing(false);
+  try {
+    // Prepare order data
+    const orderData = {
+      customerInfo,
+      items: cart.map(item => ({
+        productId: item.id,
+        title: item.title,
+        price: item.price,
+        img: item.img,
+        quantity: 1
+      })),
+      totalAmount: total,
+      paymentMethod: selectedPaymentMethod,
+    };
+
+    switch (selectedPaymentMethod) {
+      case 'phonepe':
+        await handlePay(total, orderData);
+        break;
+      // Add other payment methods...
     }
-  };
+  } catch (error) {
+    console.error('Payment error:', error);
+    setIsProcessing(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -309,16 +324,6 @@ export default function CartPage() {
                           Your payment is secured with 256-bit SSL encryption
                         </span>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Supported Payment Methods */}
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <h5 className="text-sm font-semibold text-gray-600 mb-4">
-                      All Supported Payment Methods
-                    </h5>
-                    <div className="flex flex-wrap gap-3">
-                      {/* Your existing payment method icons */}
                     </div>
                   </div>
                 </motion.div>

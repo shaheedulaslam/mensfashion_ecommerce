@@ -1,6 +1,8 @@
+// context/CartContext.tsx
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { usePathname } from "next/navigation";
 
 export type Product = {
   id: string;
@@ -21,6 +23,14 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Product[]>([]);
+  const pathname = usePathname();
+
+  // Don't provide cart context for admin routes
+  const isAdminRoute = pathname?.startsWith('/admin');
+  
+  if (isAdminRoute) {
+    return <>{children}</>;
+  }
 
   const addToCart = (product: Product) => {
     setCart((currentCart) => [...currentCart, product]);

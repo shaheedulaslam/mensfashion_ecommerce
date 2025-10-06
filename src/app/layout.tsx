@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={generalSans.variable}>
-              <CartProvider>
+          <CartProvider>
           {children}
         </CartProvider>
       </body>
