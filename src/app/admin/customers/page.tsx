@@ -49,6 +49,16 @@ interface CustomerStats {
   averageOrderValue: number;
 }
 
+interface ApiResponse {
+  success: boolean;
+  data: Customer[];
+}
+
+interface StatsApiResponse {
+  success: boolean;
+  data: CustomerStats;
+}
+
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [stats, setStats] = useState<CustomerStats | null>(null);
@@ -72,14 +82,18 @@ export default function AdminCustomersPage() {
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
 
-      const response = await axios.get(`/api/customers?${params}`);
+      const response = await axios.get<ApiResponse>(`/api/customers?${params}`);
       const data = response.data;
 
-      if (data) {
+      if (data.success && Array.isArray(data.data)) {
         setCustomers(data.data);
+      } else {
+        console.error('Invalid response format:', data);
+        setCustomers([]);
       }
     } catch (error) {
       console.error('Error fetching customers:', error);
+      setCustomers([]);
     } finally {
       setLoading(false);
     }
@@ -87,14 +101,18 @@ export default function AdminCustomersPage() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('/api/customers/stats');
+      const response = await axios.get<StatsApiResponse>('/api/customers/stats');
       const data = response.data;
 
-      if (data) {
-        setStats(data);
+      if (data.success && data.data) {
+        setStats(data.data);
+      } else {
+        console.error('Invalid stats response format:', data);
+        setStats(null);
       }
     } catch (error) {
       console.error('Error fetching stats:', error);
+      setStats(null);
     }
   };
 
@@ -135,6 +153,9 @@ export default function AdminCustomersPage() {
     }).format(amount);
   };
 
+  // Safe check for topSpenders
+  const hasTopSpenders = stats?.topSpenders && Array.isArray(stats.topSpenders) && stats.topSpenders.length > 0;
+
   if (loading && customers.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -163,32 +184,38 @@ export default function AdminCustomersPage() {
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats - Added safe checks */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <div className="text-2xl font-bold text-gray-900">{stats.totalCustomers}</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {stats.totalCustomers || 0}
+            </div>
             <div className="text-gray-600">Total Customers</div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <div className="text-2xl font-bold text-green-600">{stats.newCustomersThisMonth}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {stats.newCustomersThisMonth || 0}
+            </div>
             <div className="text-gray-600">New This Month</div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <div className="text-2xl font-bold text-blue-600">{stats.customersWithOrders}</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {stats.customersWithOrders || 0}
+            </div>
             <div className="text-gray-600">With Orders</div>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
             <div className="text-2xl font-bold text-purple-600">
-              {formatCurrency(stats.averageOrderValue)}
+              {formatCurrency(stats.averageOrderValue || 0)}
             </div>
             <div className="text-gray-600">Avg. Order Value</div>
           </div>
         </div>
       )}
 
-      {/* Top Spenders */}
-      {stats && stats.topSpenders.length > 0 && (
+      {/* Top Spenders - Fixed with safe check */}
+      {hasTopSpenders && (
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <h3 className="text-lg font-semibold mb-4">Top Spenders</h3>
           <div className="space-y-3">
@@ -204,8 +231,12 @@ export default function AdminCustomersPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-green-600">{formatCurrency(customer.totalSpent)}</div>
-                  <div className="text-sm text-gray-500">{customer.totalOrders} orders</div>
+                  <div className="font-bold text-green-600">
+                    {formatCurrency(customer.totalSpent || 0)}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {customer.totalOrders || 0} orders
+                  </div>
                 </div>
               </div>
             ))}
@@ -297,13 +328,13 @@ export default function AdminCustomersPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
-                      {customer.totalOrders}
+                      {customer.totalOrders || 0}
                     </div>
                     <div className="text-sm text-gray-500">orders</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-green-600">
-                      {formatCurrency(customer.totalSpent)}
+                      {formatCurrency(customer.totalSpent || 0)}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -406,7 +437,7 @@ const CustomerDetailsModal = ({ customer, onClose }: {
   };
 
   return (
-    <div className="fixed inset-0 bbg-black/20 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
@@ -456,28 +487,28 @@ const CustomerDetailsModal = ({ customer, onClose }: {
                   Address
                 </h4>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <p>{customer.address.street}</p>
-                  <p>{customer.address.city}, {customer.address.state} {customer.address.zipCode}</p>
-                  <p>{customer.address.country}</p>
+                  <p>{customer.address?.street || 'No address provided'}</p>
+                  <p>{customer.address?.city}, {customer.address?.state} {customer.address?.zipCode}</p>
+                  <p>{customer.address?.country}</p>
                 </div>
               </div>
 
               {/* Order Statistics */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-blue-50 p-4 rounded-lg text-center">
-                  <div className="text-2xl font-bold text-blue-600">{customer.totalOrders}</div>
+                  <div className="text-2xl font-bold text-blue-600">{customer.totalOrders || 0}</div>
                   <div className="text-sm text-blue-800">Total Orders</div>
                 </div>
                 <div className="bg-green-50 p-4 rounded-lg text-center">
                   <div className="text-2xl font-bold text-green-600">
-                    {formatCurrency(customer.totalSpent)}
+                    {formatCurrency(customer.totalSpent || 0)}
                   </div>
                   <div className="text-sm text-green-800">Total Spent</div>
                 </div>
               </div>
 
               {/* Recent Orders */}
-              {customerDetails?.recentOrders && customerDetails.recentOrders.length > 0 && (
+              {customerDetails?.recentOrders && Array.isArray(customerDetails.recentOrders) && customerDetails.recentOrders.length > 0 && (
                 <div>
                   <h4 className="font-semibold mb-3">Recent Orders</h4>
                   <div className="space-y-2">
@@ -490,7 +521,7 @@ const CustomerDetailsModal = ({ customer, onClose }: {
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="font-semibold">{formatCurrency(order.totalAmount)}</div>
+                          <div className="font-semibold">{formatCurrency(order.totalAmount || 0)}</div>
                           <div className={`text-xs px-2 py-1 rounded-full ${
                             order.orderStatus === 'delivered' ? 'bg-green-100 text-green-800' :
                             order.orderStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :

@@ -72,8 +72,8 @@ export default function DynamicCollectionPage() {
       const response = await axios.get(`/api/products?category=${category}`);
       const data = response.data;
 
-      if (data) {
-        setProducts(data);
+      if (data.success && Array.isArray(data.data)) {
+        setProducts(data.data);
       } else {
         setError(`Failed to fetch ${categoryTitles[category]?.title || category}`);
       }

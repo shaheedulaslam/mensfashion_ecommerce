@@ -32,6 +32,11 @@ interface Order {
   createdAt: string;
 }
 
+interface ApiResponse {
+  success: boolean;
+  data: Order[];
+}
+
 export default function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,13 +49,18 @@ export default function AdminOrders() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('/api/orders');
+      const response = await axios.get<ApiResponse>('/api/orders');
       const data = response.data;
-      if (data) {
-        setOrders(data);
+      
+      if (data.success && Array.isArray(data.data)) {
+        setOrders(data.data);
+      } else {
+        console.error('Invalid response format:', data);
+        setOrders([]);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
+      setOrders([]);
     } finally {
       setLoading(false);
     }
@@ -80,17 +90,6 @@ export default function AdminOrders() {
     
     return matchesSearch && matchesStatus;
   });
-
-  // const getStatusIcon = (status: Order['orderStatus']) => {
-  //   switch (status) {
-  //     case 'pending': return <Clock className="w-4 h-4 text-yellow-500" />;
-  //     case 'confirmed': return <CheckCircle className="w-4 h-4 text-blue-500" />;
-  //     case 'shipped': return <Truck className="w-4 h-4 text-purple-500" />;
-  //     case 'delivered': return <CheckCircle className="w-4 h-4 text-green-500" />;
-  //     case 'cancelled': return <XCircle className="w-4 h-4 text-red-500" />;
-  //     default: return <Clock className="w-4 h-4 text-gray-500" />;
-  //   }
-  // };
 
   const getStatusColor = (status: Order['orderStatus']) => {
     switch (status) {
@@ -251,7 +250,7 @@ export default function AdminOrders() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <select
                       value={order.orderStatus}
-                      onChange={(e) => updateOrderStatus(order.orderId, e.target.value as Order['orderStatus'])}
+                      onChange={(e) => updateOrderStatus(order._id, e.target.value as Order['orderStatus'])}
                       className={`text-xs font-medium px-2.5 py-0.5 rounded-full border-0 focus:ring-2 focus:ring-black ${getStatusColor(order.orderStatus)}`}
                     >
                       <option value="pending">Pending</option>
@@ -289,7 +288,9 @@ export default function AdminOrders() {
         {filteredOrders.length === 0 && (
           <div className="text-center py-12">
             <Package className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No orders found</h3>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              {orders.length === 0 ? 'No orders found' : 'No orders match your filters'}
+            </h3>
             <p className="mt-1 text-sm text-gray-500">
               {searchTerm || statusFilter !== 'all' 
                 ? 'Try changing your filters or search term' 

@@ -72,9 +72,9 @@ export default function AdminProductsPage() {
       const response = await axios.get(`/api/products?${params}`);
       const data = response.data;
 
-      if (data) {
-        setProducts(data);
-      }
+if (data.success && Array.isArray(data.data)) {
+  setProducts(data.data);
+}
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
