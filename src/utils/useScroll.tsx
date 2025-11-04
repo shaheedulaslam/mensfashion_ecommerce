@@ -16,5 +16,6 @@ export default function useScroll() {
     };
   }, []);
 
+
   return scrollPosition;
 }
