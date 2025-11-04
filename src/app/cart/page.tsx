@@ -157,15 +157,19 @@ export default function CartPage() {
         saveCustomer: saveCustomerInfo,
       };
 
-      switch (selectedPaymentMethod) {
-        case "phonepe":
-          await handlePay(total, orderData);
-          break;
-        // Add other payment methods...
+      console.log("Initiating payment with amount:", total);
+
+      const result = await initiatePayment(total, orderData);
+
+      if (result && result.success && result.redirectUrl) {
+        // Redirect to PhonePe payment page
+        window.location.href = result.redirectUrl;
+      } else {
+        throw new Error("Invalid response from payment gateway");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Payment error:", error);
-      alert("Payment failed. Please try again.");
+      alert(`Payment failed: ${error.message || "Please try again."}`);
       setIsProcessing(false);
     }
   };
