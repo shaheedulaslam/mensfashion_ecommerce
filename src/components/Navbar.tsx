@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Menu } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import Link from "next/link";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
@@ -23,23 +24,23 @@ export default function Navbar() {
           >
             <Menu size={20} />
           </button>
-          <div className="flex items-baseline gap-2">
+          <Link href="/" className="flex items-baseline gap-2">
             <span className="font-extrabold text-2xl tracking-tight">90s</span>
             <span className="text-sm text-zinc-500">Mens Fashion</span>
-          </div>
+          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-6">
           <nav className="flex gap-4 text-sm text-zinc-700">
-            <a className="hover:text-black" href="#collections">
+            <Link className="hover:text-black" href="#collections">
               Collections
-            </a>
-            <a className="hover:text-black" href="#trending">
+            </Link>
+            <Link className="hover:text-black" href="#trending">
               Trending
-            </a>
-            <a className="hover:text-black" href="#about">
+            </Link>
+            <Link className="hover:text-black" href="#about">
               About
-            </a>
+            </Link>
           </nav>
           <div className="relative">
             <input
