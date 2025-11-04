@@ -8,6 +8,7 @@ import {
   Edit, 
   Package
 } from 'lucide-react';
+import axios from 'axios';
 
 interface Order {
   _id: string;
@@ -43,10 +44,10 @@ export default function AdminOrders() {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('/api/orders');
-      const data = await response.json();
-      if (data.success) {
-        setOrders(data.data);
+      const response = await axios.get('/api/orders');
+      const data = response.data;
+      if (data) {
+        setOrders(data);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -57,15 +58,11 @@ export default function AdminOrders() {
 
   const updateOrderStatus = async (orderId: string, newStatus: Order['orderStatus']) => {
     try {
-      const response = await fetch(`/api/orders/${orderId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orderStatus: newStatus }),
+      const response = await axios.put(`/api/orders/${orderId}`, {
+        orderStatus: newStatus,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         fetchOrders(); // Refresh orders
       }
     } catch (error) {

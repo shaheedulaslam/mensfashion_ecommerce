@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { 
   Package, 
   Users, 
@@ -32,11 +33,11 @@ export default function AdminDashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      // Fetch orders to calculate stats
-      const ordersResponse = await fetch('/api/orders');
-      const ordersData = await ordersResponse.json();
+      // Fetch orders to calculate stats using Axios
+      const ordersResponse = await axios.get('/api/orders');
+      const ordersData = ordersResponse.data;
 
-      if (ordersData.success) {
+      if (ordersData) {
         const orders = ordersData.data;
         
         // Calculate stats

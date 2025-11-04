@@ -20,6 +20,7 @@ import {
   IndianRupee,
   Package
 } from 'lucide-react';
+import axios from 'axios';
 
 interface Customer {
   _id: string;
@@ -70,11 +71,11 @@ export default function AdminCustomersPage() {
       if (searchTerm) params.append('search', searchTerm);
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
-      
-      const response = await fetch(`/api/customers?${params}`);
-      const data = await response.json();
-      
-      if (data.success) {
+
+      const response = await axios.get(`/api/customers?${params}`);
+      const data = response.data;
+
+      if (data) {
         setCustomers(data.data);
       }
     } catch (error) {
@@ -86,11 +87,11 @@ export default function AdminCustomersPage() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/customers/stats');
-      const data = await response.json();
-      
-      if (data.success) {
-        setStats(data.data);
+      const response = await axios.get('/api/customers/stats');
+      const data = response.data;
+
+      if (data) {
+        setStats(data);
       }
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -101,11 +102,9 @@ export default function AdminCustomersPage() {
     if (!confirm('Are you sure you want to delete this customer? This action cannot be undone.')) return;
     
     try {
-      const response = await fetch(`/api/customers/${customerId}`, {
-        method: 'DELETE'
-      });
-      
-      if (response.ok) {
+      const response = await axios.delete(`/api/customers/${customerId}`);
+
+      if (response.status === 200) {
         fetchCustomers();
         fetchStats();
       }
@@ -384,11 +383,11 @@ const CustomerDetailsModal = ({ customer, onClose }: {
 
   const fetchCustomerDetails = async () => {
     try {
-      const response = await fetch(`/api/customers/${customer._id}`);
-      const data = await response.json();
-      
-      if (data.success) {
-        setCustomerDetails(data.data);
+      const response = await axios.get(`/api/customers/${customer._id}`);
+      const data = response.data;
+
+      if (data) {
+        setCustomerDetails(data);
       }
     } catch (error) {
       console.error('Error fetching customer details:', error);

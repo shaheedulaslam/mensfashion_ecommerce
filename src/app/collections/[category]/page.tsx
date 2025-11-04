@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import CollectionLayout from '@/components/CollectionLayout';
 import ProductGrid from '@/components/ProductGrid';
+import axios from 'axios';
 
 interface Product {
   _id: string;
@@ -67,12 +68,12 @@ export default function DynamicCollectionPage() {
     try {
       setLoading(true);
       setError(null);
-      
-      const response = await fetch(`/api/products?category=${category}`);
-      const data = await response.json();
-      
-      if (data.success) {
-        setProducts(data.data);
+
+      const response = await axios.get(`/api/products?category=${category}`);
+      const data = response.data;
+
+      if (data) {
+        setProducts(data);
       } else {
         setError(`Failed to fetch ${categoryTitles[category]?.title || category}`);
       }

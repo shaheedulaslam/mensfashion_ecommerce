@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle, XCircle, Clock } from 'lucide-react';
+import axios from 'axios';
 
 export default function PaymentStatus({ params }: any) {
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading');
@@ -14,15 +15,11 @@ export default function PaymentStatus({ params }: any) {
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        const response = await fetch('/api/payment/status', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id: params.transactionId }),
+        const response = await axios.post('/api/payment/status', {
+          id: params.transactionId,
         });
 
-        const data = await response.json();
+        const data = response.data;
 
         if (data.status === 'PAYMENT_SUCCESS') {
           setStatus('success');

@@ -19,6 +19,7 @@ import {
   Grid,
   List,
 } from "lucide-react";
+import axios from "axios";
 
 interface Product {
   _id: string;
@@ -68,11 +69,11 @@ export default function AdminProductsPage() {
       if (categoryFilter !== "all") params.append("category", categoryFilter);
       if (statusFilter === "featured") params.append("featured", "true");
 
-      const response = await fetch(`/api/products?${params}`);
-      const data = await response.json();
+      const response = await axios.get(`/api/products?${params}`);
+      const data = response.data;
 
-      if (data.success) {
-        setProducts(data.data);
+      if (data) {
+        setProducts(data);
       }
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -85,11 +86,9 @@ export default function AdminProductsPage() {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const response = await fetch(`/api/products/${productId}`, {
-        method: "DELETE",
-      });
+      const response = await axios.delete(`/api/products/${productId}`);
 
-      if (response.ok) {
+      if (response.status === 200) {
         fetchProducts(); // Refresh the list
       }
     } catch (error) {
@@ -102,15 +101,11 @@ export default function AdminProductsPage() {
     currentFeatured: boolean
   ) => {
     try {
-      const response = await fetch(`/api/products/${productId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ featured: !currentFeatured }),
+      const response = await axios.put(`/api/products/${productId}`, {
+        featured: !currentFeatured,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         fetchProducts(); // Refresh the list
       }
     } catch (error) {
@@ -120,15 +115,11 @@ export default function AdminProductsPage() {
 
   const toggleActive = async (productId: string, currentActive: boolean) => {
     try {
-      const response = await fetch(`/api/products/${productId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ active: !currentActive }),
+      const response = await axios.put(`/api/products/${productId}`, {
+        active: !currentActive,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         fetchProducts(); // Refresh the list
       }
     } catch (error) {
@@ -551,15 +542,15 @@ const ProductFormModal = ({
       const url = product ? `/api/products/${product._id}` : "/api/products";
       const method = product ? "PUT" : "POST";
 
-      const response = await fetch(url, {
+      const response = await axios(url, {
         method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        data: payload,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         onSave();
       }
     } catch (error) {
